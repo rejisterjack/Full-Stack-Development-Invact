@@ -4,12 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start530": "nodemon ./BD5.3_CW_0/index.js",
+    "start531": "nodemon ./BD5.3_HW_1/index.js",
+    "start532": "nodemon ./BD5.3_HW_2/index.js",
+    "start533": "nodemon ./BD5.3_HW_3/index.js",
+    "start540": "nodemon ./BD5.4_CW_0/index.js",
+    "start541": "nodemon ./BD5.4_HW_1/index.js",
+    "start542": "nodemon ./BD5.4_HW_2/index.js",
+    "start543": "nodemon ./BD5.4_HW_3/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^18.0.6"
+    "@types/node": "^18.0.6",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9",
+    "sequelize": "^6.37.5",
+    "sqlite3": "^5.1.7"
   }
 }

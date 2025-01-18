@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start530": "nodemon ./BD5.3_CW_0/index.js",
-    "start531": "nodemon ./BD5.3_HW_1/index.js",
-    "start532": "nodemon ./BD5.3_HW_2/index.js",
-    "start533": "nodemon ./BD5.3_HW_3/index.js",
-    "start540": "nodemon ./BD5.4_CW_0/index.js",
-    "start541": "nodemon ./BD5.4_HW_1/index.js",
-    "start542": "nodemon ./BD5.4_HW_2/index.js",
-    "start543": "nodemon ./BD5.4_HW_3/index.js"
+    "530": "nodemon ./BD5.3_CW_0/index.js",
+    "531": "nodemon ./BD5.3_HW_1/index.js",
+    "532": "nodemon ./BD5.3_HW_2/index.js",
+    "533": "nodemon ./BD5.3_HW_3/index.js",
+    "540": "nodemon ./BD5.4_CW_0/index.js",
+    "541": "nodemon ./BD5.4_HW_1/index.js",
+    "542": "nodemon ./BD5.4_HW_2/index.js",
+    "543": "nodemon ./BD5.4_HW_3/index.js"
   },
   "keywords": [],
   "author": "",

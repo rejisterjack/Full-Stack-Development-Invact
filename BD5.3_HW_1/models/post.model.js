@@ -1,4 +1,4 @@
-const { sequelize, DataTypes } = require("../lib");
+const { sequelize, DataTypes } = require("../lib")
 
 const post = sequelize.define("post", {
   id: {
@@ -9,6 +9,6 @@ const post = sequelize.define("post", {
   author: DataTypes.TEXT,
   content: DataTypes.TEXT,
   title: DataTypes.TEXT,
-});
+})
 
-module.exports = { post };
+module.exports = { post }

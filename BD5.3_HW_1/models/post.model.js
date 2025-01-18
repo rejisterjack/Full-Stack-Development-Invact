@@ -5,7 +5,6 @@ const post = sequelize.define("post", {
     type: DataTypes.INTEGER,
     primaryKey: true,
   },
-  name: DataTypes.TEXT,
   author: DataTypes.TEXT,
   content: DataTypes.TEXT,
   title: DataTypes.TEXT,

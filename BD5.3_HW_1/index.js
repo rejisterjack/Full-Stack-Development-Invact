@@ -1,10 +1,11 @@
-const express = require("express")
-const { sequelize } = require("./lib")
-const { post } = require("./models/post.model")
-const { error } = require("console")
+const express = require("express");
+const { sequelize } = require("./lib");
+const { post } = require("./models/post.model");
+const { error } = require("console");
+const { where } = require("sequelize");
 
-const app = express()
-const port = 3000
+const app = express();
+const port = 3000;
 const posts = [
   {
     title: "Getting Started with Node.js",
@@ -63,29 +64,97 @@ const posts = [
       "An introduction to unit testing and test-driven development in JavaScript.",
     author: "Jane Miller",
   },
-]
+];
 
-app.use(express.static("static"))
-app.use(express.json())
+app.use(express.static("static"));
+app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Server is on!")
-})
+  res.send("Server is on!");
+});
 
 app.get("/seed_db", async (req, res) => {
   try {
-    await sequelize.sync({ force: true })
-    await post.bulkCreate(posts)
+    await sequelize.sync({ force: true });
+    await post.bulkCreate(posts);
     res.status(200).json({
       message: "Database seeded successfully!",
-    })
+    });
   } catch (error) {
     res.status(500).json({
       error: error.message,
-    })
+    });
   }
-})
+});
+
+app.get("/posts", async (req, res) => {
+  try {
+    const postsData = await post.findAll();
+    if (postsData.length === 0) {
+      res.status(404).json({
+        message: "No posts found",
+      });
+    }
+    res.status(200).json({
+      posts: postsData,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+});
+
+app.post("/posts/new", async (req, res) => {
+  try {
+    const postData = req.body.newPost || {};
+    const newPostData = await post.create(postData);
+    res.status(200).json({
+      post: newPostData,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post("/posts/update/:id", async (req, res) => {
+  try {
+    const postData = req.body || {};
+    const currentPost = await post.findOne({
+      where: { id: req.params.id || 0 },
+    });
+    if (!currentPost)
+      return res.status(404).json({
+        message: "No post found",
+      });
+    const updatedData = await currentPost.set(postData).save();
+    console.log("updatedData", updatedData);
+    return res.status(200).json({
+      message: "post updated successfully",
+      post: updatedData,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post("/posts/delete", async (req, res) => {
+  try {
+    const currentPost = await post.destroy({
+      where: { id: req.body.id || 0 },
+    });
+    if (!currentPost)
+      return res.status(404).json({
+        message: "No post found",
+      });
+    return res.status(200).json({
+      message: "post deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 app.listen(port, () => {
-  console.log(`TravelEase API listening at http://localhost:${port}`)
-})
+  console.log(`TravelEase API listening at http://localhost:${port}`);
+});

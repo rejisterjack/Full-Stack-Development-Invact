@@ -15,12 +15,15 @@
     "550": "nodemon ./BD5.5_CW_0/index.js",
     "551": "nodemon ./BD5.5_HW_1/index.js",
     "552": "nodemon ./BD5.5_HW_2/index.js",
-    "553": "nodemon ./BD5.5_HW_3/index.js"
+    "553": "nodemon ./BD5.5_HW_3/index.js",
+    "5f1": "nodemon ./BD5.F_AS_1/index.js",
+    "5f2": "nodemon ./BD5.F_AS_2/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sequelize/core": "^7.0.0-alpha.43",
     "@types/node": "^18.0.6",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",

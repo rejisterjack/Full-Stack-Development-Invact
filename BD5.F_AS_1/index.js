@@ -113,6 +113,117 @@ app.get("/seed_db", async (req, res) => {
   return res.json({ message: "Database seeded successfully" })
 })
 
+app.get("/tickets", async (req, res) => {
+  try {
+    const tickets = await ticket
+      .findAll()
+      .then(
+        async (tickets) =>
+          await Promise.all(
+            tickets.map(async (ticket) => await getTicketDetails(ticket))
+          )
+      )
+
+    res.status(200).json({ tickets })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+app.get("/tickets/details/:id", async (req, res) => {
+  try {
+    const ticketData = await ticket.findByPk(+req.params.id)
+    if (!ticketData) {
+      return res.status(404).json({ message: "Ticket not found" })
+    }
+
+    const ticketDetails = await getTicketDetails(ticketData)
+    res.status(200).json({ ticketDetails })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+app.get("/tickets/status/:status", async (req, res) => {
+  try {
+    const tickets = await ticket.findAll({
+      where: { status: req.params.status },
+    })
+    const ticketsData = await Promise.all(
+      tickets.map(async (ticket) => await getTicketDetails(ticket))
+    )
+    res.status(200).json({ tickets: ticketsData })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+app.get("/tickets/sort-by-priority", async (req, res) => {
+  try {
+    const tickets = await ticket
+      .findAll({
+        order: [["priority", "DESC"]],
+      })
+      .then((tickets) =>
+        Promise.all(
+          tickets.map(async (ticket) => await getTicketDetails(ticket))
+        )
+      )
+    res.status(200).json({ tickets })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+const handleAddTicket = async (newTicket) => {
+  const newTicketInfo = await ticket.create(newTicket)
+  await ticketCustomer.create({
+    ticketId: newTicketInfo.id,
+    customerId: newTicket.customerId,
+  })
+  await ticketAgent.create({
+    ticketId: newTicketInfo.id,
+    agentId: newTicket.agentId,
+  })
+  const newTicketData = await getTicketDetails(newTicketInfo)
+  return newTicketData
+}
+
+app.post("/tickets/new", async (req, res) => {
+  try {
+    const newTicket = req.body
+    const newTicketData = await handleAddTicket(newTicket)
+    res.status(200).json({ ticket: newTicketData })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+app.put("/tickets/update/:id", async (req, res) => {
+  try {
+    const ticketData = await ticket.findByPk(+req.params.id)
+    if (!ticketData) {
+      return res.status(404).json({ message: "Ticket not found" })
+    }
+    const updatedTicket = await ticketData.set(req.body).save()
+    const updatedTicketData = await getTicketDetails(updatedTicket)
+    res.status(200).json({ ticket: updatedTicketData })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+app.delete("/tickets/delete", async (req, res) => {
+  try {
+    const ticketData = await ticket.destroy({
+      where: { id: req.body.id },
+    })
+    res.status(200).json({ message: "Ticket deleted successfully", ticketData })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })

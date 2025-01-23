@@ -21,3 +21,5 @@ const ticketAgent = sequelize.define("ticketAgent", {
 
 ticket.belongsToMany(agent, { through: ticketAgent })
 agent.belongsToMany(ticket, { through: ticketAgent })
+
+module.exports = { ticketAgent }

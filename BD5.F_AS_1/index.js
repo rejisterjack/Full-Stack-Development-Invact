@@ -11,6 +11,46 @@ const port = 3000
 
 app.use(express.json())
 
+async function getTicketCustomers(ticketId) {
+  const ticketCustomers = await ticketCustomer.findAll({
+    where: { ticketId },
+  })
+
+  let customerData
+  for (let cus of ticketCustomers) {
+    customerData = await customer.findOne({
+      where: { customerId: cus.customerId },
+    })
+  }
+
+  return customerData
+}
+
+async function getTicketAgents(ticketId) {
+  const ticketAgents = await ticketAgent.findAll({
+    where: { ticketId },
+  })
+  let agentData
+  for (let ag of ticketAgents) {
+    agentData = await agent.findOne({
+      where: { agentId: ag.agentId },
+    })
+  }
+
+  return agentData
+}
+
+async function getTicketDetails(ticketData) {
+  const customer = await getTicketCustomers(ticketData.id)
+  const agent = await getTicketAgents(ticketData.id)
+
+  return {
+    ...ticketData.dataValues,
+    customer,
+    agent,
+  }
+}
+
 app.get("/", (req, res) => {
   res.send("server is on!")
 })

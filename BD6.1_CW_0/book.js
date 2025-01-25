@@ -39,4 +39,5 @@ module.exports = {
   getBooks,
   addBook,
   getBookById,
+  books
 }

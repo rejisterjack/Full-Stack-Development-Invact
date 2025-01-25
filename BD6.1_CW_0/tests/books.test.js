@@ -23,4 +23,24 @@ describe("Books Functions", () => {
       },
     ])
   })
+
+  it("should get a book by id", () => {
+    expect(getBookById(1).id).toBe(1)
+    expect(getBookById(2).id).toBe(2)
+  })
+
+  it("should return undefined for a non-existing book", () => {
+    expect(getBookById()).toBeUndefined()
+    expect(getBookById(99)).toBeUndefined()
+  })
+
+  it("should add a new book", () => {
+    let newBook = { title: "New Book", author: "Author Name" }
+    let addedBook = addBook(newBook)
+    expect(addedBook).toEqual({
+      id: getBooks().length,
+      title: "New Book",
+      author: "Author Name",
+    })
+  })
 })

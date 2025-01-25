@@ -16,6 +16,10 @@
     "551": "nodemon ./BD5.5_HW_1/index.js",
     "552": "nodemon ./BD5.5_HW_2/index.js",
     "553": "nodemon ./BD5.5_HW_3/index.js",
+    "610": "nodemon ./BD6.1_CW_0/index.js",
+    "611": "nodemon ./BD6.1_HW_1/index.js",
+    "612": "nodemon ./BD6.1_HW_2/index.js",
+    "613": "nodemon ./BD6.1_HW_3/index.js",
     "5f1": "nodemon ./BD5.F_AS_1/index.js",
     "5f2": "nodemon ./BD5.F_AS_2/index.js"
   },
@@ -28,6 +32,7 @@
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.9",
     "sequelize": "^6.37.5",
     "sqlite3": "^5.1.7"

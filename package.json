@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "jest",
     "530": "nodemon ./BD5.3_CW_0/index.js",
     "531": "nodemon ./BD5.3_HW_1/index.js",
     "532": "nodemon ./BD5.3_HW_2/index.js",
@@ -16,12 +17,12 @@
     "551": "nodemon ./BD5.5_HW_1/index.js",
     "552": "nodemon ./BD5.5_HW_2/index.js",
     "553": "nodemon ./BD5.5_HW_3/index.js",
+    "5f1": "nodemon ./BD5.F_AS_1/index.js",
+    "5f2": "nodemon ./BD5.F_AS_2/index.js",
     "610": "nodemon ./BD6.1_CW_0/index.js",
     "611": "nodemon ./BD6.1_HW_1/index.js",
     "612": "nodemon ./BD6.1_HW_2/index.js",
-    "613": "nodemon ./BD6.1_HW_3/index.js",
-    "5f1": "nodemon ./BD5.F_AS_1/index.js",
-    "5f2": "nodemon ./BD5.F_AS_2/index.js"
+    "613": "nodemon ./BD6.1_HW_3/index.js"
   },
   "keywords": [],
   "author": "",

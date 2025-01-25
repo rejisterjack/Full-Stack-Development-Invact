@@ -17,15 +17,15 @@ const books = [
   },
 ]
 
-export function getBooks() {
+function getBooks() {
   return books
 }
 
-export function getBookById(id) {
+function getBookById(id) {
   return books.find((book) => book.id === parseInt(id))
 }
 
-export function addBook(book) {
+function addBook(book) {
   const newBook = {
     id: books.length + 1,
     title: book.title,
@@ -33,4 +33,10 @@ export function addBook(book) {
   }
   books.push(newBook)
   return newBook
+}
+
+module.exports = {
+  getBooks,
+  addBook,
+  getBookById,
 }

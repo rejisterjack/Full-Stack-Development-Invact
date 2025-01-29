@@ -5,13 +5,13 @@ const movies = [
   { id: 4, title: "Pulp Fiction", director: "Quentin Tarantino" },
 ]
 
-export const getMovies = () => movies
+const getMovies = () => movies
 
-export const getMovieById = (id) => {
-  return getMovies().find((item) => item.id === id)
+const getMovieById = (id) => {
+  return movies.find((item) => item.id === parseInt(id)) 
 }
 
-export const addMovie = (movie) => {
+const addMovie = (movie) => {
   const newMovie = {
     id: movie.id,
     title: movie.title,
@@ -19,4 +19,11 @@ export const addMovie = (movie) => {
   }
   movies.push(newMovie)
   return newMovie
+}
+
+module.exports = {
+  movies,
+  addMovie,
+  getMovies,
+  getMovieById,
 }

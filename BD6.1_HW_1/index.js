@@ -17,6 +17,7 @@ app.get("/movies", (req, res) => {
 
 app.get("/movies/:movieId", (req, res) => {
   const movie = getMovieById(+req.params.movieId)
+  console.log(movie, "movie")
   if (!movie) {
     res.status(404).json({ message: "no movie found" })
   }

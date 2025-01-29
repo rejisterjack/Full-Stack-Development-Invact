@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
     "530": "nodemon ./BD5.3_CW_0/index.js",
     "531": "nodemon ./BD5.3_HW_1/index.js",
     "532": "nodemon ./BD5.3_HW_2/index.js",
@@ -17,8 +16,6 @@
     "551": "nodemon ./BD5.5_HW_1/index.js",
     "552": "nodemon ./BD5.5_HW_2/index.js",
     "553": "nodemon ./BD5.5_HW_3/index.js",
-    "5f1": "nodemon ./BD5.F_AS_1/index.js",
-    "5f2": "nodemon ./BD5.F_AS_2/index.js",
     "610": "nodemon ./BD6.1_CW_0/index.js",
     "611": "nodemon ./BD6.1_HW_1/index.js",
     "612": "nodemon ./BD6.1_HW_2/index.js",
@@ -39,6 +36,9 @@
     "651": "nodemon ./BD6.5_HW_1/index.js",
     "652": "nodemon ./BD6.5_HW_2/index.js",
     "653": "nodemon ./BD6.5_HW_3/index.js",
+    "test": "jest",
+    "5f1": "nodemon ./BD5.F_AS_1/index.js",
+    "5f2": "nodemon ./BD5.F_AS_2/index.js",
     "6f1": "nodemon ./BD6.F_AS_1/index.js",
     "6f2": "nodemon ./BD6.F_AS_2/index.js"
   },
@@ -51,9 +51,11 @@
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "express": "^4.21.2",
-    "jest": "^29.7.0",
     "nodemon": "^3.1.9",
     "sequelize": "^6.37.5",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

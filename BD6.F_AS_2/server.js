@@ -72,6 +72,14 @@ app.get("/stocks/:ticker", (req, res) => {
 // Exercise 3: Add a New Trade
 app.post("/trades/new", (req, res) => {
   const trade = req.body
+  if (
+    !trade.stockId ||
+    !trade.quantity ||
+    !trade.tradeType ||
+    !trade.tradeDate
+  ) {
+    return res.status(400).json({ message: "Invalid trade" })
+  }
   const newTrade = addTrade(trade)
   res.status(201).json({ trade: newTrade })
 })
@@ -83,4 +91,7 @@ app.get("/", (req, res) => {
 module.exports = {
   app,
   port,
+  getAllStocks,
+  getStockByTicker,
+  addTrade,
 }

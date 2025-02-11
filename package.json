@@ -41,7 +41,8 @@
     "5f2": "nodemon ./BD5.F_AS_2/index.js",
     "6f1": "nodemon ./BD6.F_AS_1/index.js",
     "6f2": "nodemon ./BD6.F_AS_2/index.js",
-    "sd0": "nodemon ./SD2.2_CW_0/index.js"
+    "sd0": "nodemon ./SD2.2_CW_0/index.js",
+    "ms0": "nodemon ./MS1.1_CW_0/index.js"
   },
   "keywords": [],
   "author": "",

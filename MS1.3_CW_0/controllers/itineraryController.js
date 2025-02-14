@@ -1,14 +1,10 @@
 const { default: axios } = require("axios")
-const { validateFlightQueryParams, validateHotelQueryParams, validateSiteQueryParams } = require("../validations")
-
-const axiosInstance = axios.create({
-  baseURL: process.env.BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-    CLIENT_KEY: process.env.CLIENT_KEY,
-    CLIENT_SECRET: process.env.CLIENT_SECRET,
-  },
-})
+const {
+  validateFlightQueryParams,
+  validateHotelQueryParams,
+  validateSiteQueryParams,
+} = require("../validations")
+const axiosInstance = require("../lib/axios.lib")
 
 const getFlightsByOriginAndDestination = async (req, res) => {
   const errors = validateFlightQueryParams(req.query)

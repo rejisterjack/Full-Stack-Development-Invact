@@ -1,4 +1,5 @@
 const { default: axios } = require("axios")
+const { validateFlightQueryParams, validateHotelQueryParams, validateSiteQueryParams } = require("../validations")
 
 const axiosInstance = axios.create({
   baseURL: process.env.BASE_URL,
@@ -8,6 +9,54 @@ const axiosInstance = axios.create({
     CLIENT_SECRET: process.env.CLIENT_SECRET,
   },
 })
+
+const getFlightsByOriginAndDestination = async (req, res) => {
+  const errors = validateFlightQueryParams(req.query)
+
+  if (errors.length > 0) return res.status(400).json({ errors })
+
+  try {
+    const response = await axiosInstance.get(
+      `/flights/search?origin=${req.query.origin}&destination=${req.query.destination}`
+    )
+    res.json(response.data)
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).send("Error fetching flight details")
+  }
+}
+
+const getHotelsByLocation = async (req, res) => {
+  const errors = validateHotelQueryParams(req.query)
+
+  if (errors.length > 0) return res.status(400).json({ errors })
+
+  try {
+    const response = await axiosInstance.get(
+      `/hotels/search?location=${req.query.location}`
+    )
+    res.json(response.data)
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).send("Error fetching hotels by location")
+  }
+}
+
+const getSitesByLocation = async (req, res) => {
+  const errors = validateSiteQueryParams(req.query)
+
+  if (errors.length > 0) return res.status(400).json({ errors })
+
+  try {
+    const response = await axiosInstance.get(
+      `/sites/search?location=${req.query.location}`
+    )
+    res.json(response.data)
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).send("Error fetching sites by location")
+  }
+}
 
 const getFlights = async (req, res) => {
   try {
@@ -80,4 +129,7 @@ module.exports = {
   getFlights,
   getHotels,
   getSites,
+  getFlightsByOriginAndDestination,
+  getHotelsByLocation,
+  getSitesByLocation,
 }

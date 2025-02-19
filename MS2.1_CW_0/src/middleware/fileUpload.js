@@ -1,5 +1,6 @@
 const multer = require("multer")
 const { UNEXPECTED_FILE_TYPE } = require("../constants/file")
+const path = require("path")
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

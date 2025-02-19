@@ -12,7 +12,6 @@ const authenticateJWT = (req, res, next) => {
     return res.status(403).json({ message: "Unauthorized2" })
   }
 
-  console.log(token, process.env.JWT_SECRET, "user")
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET)
     req.user = user

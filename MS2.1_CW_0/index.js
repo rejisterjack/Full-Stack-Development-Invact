@@ -4,6 +4,7 @@ const fileRouter = require("./src/router/fileRouter")
 const { fileURLToPath } = require("url")
 const path = require("path")
 const fs = require("fs")
+const cors = require("cors")
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -16,6 +17,8 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir)
 }
 
+app.use(cors())
+app.use(express.json())
 app.use("/src/uploads", express.static("uploads"))
 
 app.use("/files", fileRouter)

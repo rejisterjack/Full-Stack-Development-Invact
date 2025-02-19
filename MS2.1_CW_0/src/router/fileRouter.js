@@ -5,11 +5,13 @@ const { Router } = require("express")
 const upload = require("../middleware/fileUpload")
 const imageResize = require("../middleware/imageResize")
 const isFilePresent = require("../middleware/validators/isFilePresent")
+const authenticateJWT = require("../middleware/authentication")
 
 const fileRouter = Router()
 
 fileRouter.post(
   "/upload",
+  authenticateJWT,
   (req, res, next) => {
     upload(req, res, (err) => {
       if (err instanceof multer.MulterError) {

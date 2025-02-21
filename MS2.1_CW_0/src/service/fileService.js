@@ -1,4 +1,7 @@
-const { uploadToCloudinary } = require("../config/cloudinary")
+const { uploadToCloudinary, cloudinaryConfig } = require("../config/cloudinary")
+const fs = require("fs")
+
+cloudinaryConfig()
 
 const cloudinaryUpload = async (file) => {
   try {
@@ -10,6 +13,7 @@ const cloudinaryUpload = async (file) => {
     })
     return cloudinaryResponse
   } catch (error) {
+    console.log(error.message)
     throw new Error(error.message)
   }
 }

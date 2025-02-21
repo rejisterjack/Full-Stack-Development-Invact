@@ -1,3 +1,3 @@
 export const FILE_UPLOAD_URL = "http://localhost:8000/files/upload"
 export const JWT_TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1IiwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzM5OTkwNDQyLCJleHAiOjE3Mzk5OTQwNDJ9.a93oxP54OmIYyj_Rp55nr7E6JkonAvqjVPHJ8OhKiQ4"
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1IiwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQwMTM3MjY5fQ._YlPx-pYZaUzQC6sfNdHTIPqLE4Oldd9fC6BtHDi__0"

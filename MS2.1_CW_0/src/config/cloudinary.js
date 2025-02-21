@@ -29,10 +29,10 @@ const uploadToCloudinary = async (file) => {
   const timestamp = Math.round(new Date().getTime() / 1000)
   const paramsToSign = {
     timestamp,
+    folder: "Invact",
   }
   const signature = await generateSignature(paramsToSign)
   return await cloudinary.uploader.upload(file, {
-    folder: "Invact",
     ...paramsToSign,
     signature,
     api_key: process.env.CLOUDINARY_API_KEY,

@@ -6,6 +6,7 @@ const upload = require("../middleware/fileUpload")
 const imageResize = require("../middleware/imageResize")
 const isFilePresent = require("../middleware/validators/isFilePresent")
 const authenticateJWT = require("../middleware/authentication")
+const fileController = require("../controllers/fileController")
 
 const fileRouter = Router()
 
@@ -20,16 +21,15 @@ fileRouter.post(
         } else {
           return res.status(500).json({ message: err.message })
         }
-      } else {
-        next()
+      } else if (err) {
+        return res.status(500).json({ message: err.message })
       }
+      next()
     })
   },
-  (req, res) => {
-    res.json({ message: "File uploaded successfully" })
-  },
-  imageResize,
-  isFilePresent
+  isFilePresent,
+  fileController,
+  imageResize
 )
 
 module.exports = fileRouter

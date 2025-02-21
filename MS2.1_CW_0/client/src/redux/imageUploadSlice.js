@@ -26,7 +26,7 @@ export const uploadProfileImage = createAsyncThunk(
           // return { progress };
         },
       });
-      console.log(`api response`, response.data.uploadResult);
+      console.log(`api response`, response.data);
       
       return response.data.uploadResult; // Return Cloudinary URL or any relevant data
     } catch (error) {

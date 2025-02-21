@@ -5,7 +5,7 @@ const secret = process.env.JWT_SECRET
 
 const payload = { id: "12345", username: "testuser", role: "user" }
 
-const token = jwt.sign(payload, secret, { expiresIn: "1h" })
+const token = jwt.sign(payload, secret)
 
 console.log("Generated Token:", token)
 

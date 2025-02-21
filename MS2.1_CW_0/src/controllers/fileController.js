@@ -14,7 +14,7 @@ const fileController = async (req, res) => {
     const response = await cloudinaryUpload(file)
     res
       .status(200)
-      .json({ message: "File uploaded successfully", data: response })
+      .json({ message: "File uploaded successfully", uploadResult: response })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }

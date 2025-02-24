@@ -1,4 +1,4 @@
-const { sequelize } = require("../lib/sequelize")
+const { sequelize, DataTypes } = require("../lib/sequelize")
 const Author = require("./Author")
 
 const Book = sequelize.define("Book", {
@@ -9,8 +9,10 @@ const Book = sequelize.define("Book", {
 })
 
 Book.belongsTo(Author, {
-  foreignKey: "authorId",
+  foreignKey: {
+    name: "authorId",
+    allowNull: false,
+  },
 })
-Author.hasMany(Book)
 
 module.exports = Book

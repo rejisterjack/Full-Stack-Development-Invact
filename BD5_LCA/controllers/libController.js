@@ -1,19 +1,22 @@
-import Author from "../models/Author.js"
-import Book from "../models/Book.js"
-import Genre from "../models/Genre.js"
-import { authorsData, genresData, booksData } from "../seed.js"
-import { sequelize } from "../lib/sequelize.js"
+const Author = require("../models/Author.js")
+const Book = require("../models/Book.js")
+const Genre = require("../models/Genre.js")
+const { authorsData, genresData, booksData } = require("../seed.js")
+const { sequelize } = require("../lib/sequelize.js")
+const BookGenres = require("../models/BookGenres.js")
 
-export const seedDatabase = async (req, res) => {
+const seedDatabase = async (req, res) => {
   try {
     await sequelize.sync({ force: true })
 
-    const authors = await Author.bulkCreate(authorsData)
+    await Author.bulkCreate(authorsData)
     const genres = await Genre.bulkCreate(genresData)
     const books = await Book.bulkCreate(booksData)
-
-    await books[0].setGenres([genres[0]])
-    await books[1].setGenres([genres[0], genres[1]])
+    await BookGenres.bulkCreate([
+      { bookId: books[0].id, genreId: genres[0].id },
+      { bookId: books[1].id, genreId: genres[0].id },
+      { bookId: books[1].id, genreId: genres[1].id },
+    ])
 
     res.json({ message: "Database seeded successfully" })
   } catch (error) {
@@ -21,7 +24,7 @@ export const seedDatabase = async (req, res) => {
   }
 }
 
-export const getAllBooks = async (req, res) => {
+const getAllBooks = async (req, res) => {
   try {
     const books = await Book.findAll({
       include: [{ model: Author }, { model: Genre }],
@@ -32,7 +35,7 @@ export const getAllBooks = async (req, res) => {
   }
 }
 
-export const getBooksByAuthor = async (req, res) => {
+const getBooksByAuthor = async (req, res) => {
   try {
     const author = await Author.findByPk(req.params.authorId)
     if (!author) {
@@ -49,7 +52,7 @@ export const getBooksByAuthor = async (req, res) => {
   }
 }
 
-export const getBooksByGenre = async (req, res) => {
+const getBooksByGenre = async (req, res) => {
   try {
     const genre = await Genre.findByPk(req.params.genreId)
     if (!genre) {
@@ -65,7 +68,7 @@ export const getBooksByGenre = async (req, res) => {
   }
 }
 
-export const addBook = async (req, res) => {
+const addBook = async (req, res) => {
   try {
     const { title, description, publicationYear, authorId, genreIds } = req.body
 
@@ -102,4 +105,12 @@ export const addBook = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
+}
+
+module.exports = {
+  seedDatabase,
+  getAllBooks,
+  getBooksByAuthor,
+  getBooksByGenre,
+  addBook,
 }

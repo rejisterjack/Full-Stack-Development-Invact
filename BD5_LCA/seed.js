@@ -1,4 +1,4 @@
-export const authorsData = [
+const authorsData = [
   {
     name: "J.K. Rowling",
     birthdate: "1965-07-31",
@@ -11,7 +11,7 @@ export const authorsData = [
   },
 ]
 
-export const genresData = [
+const genresData = [
   { name: "Fantasy", description: "Magical and mythical stories." },
   {
     name: "Drama",
@@ -19,7 +19,7 @@ export const genresData = [
   },
 ]
 
-export const booksData = [
+const booksData = [
   {
     title: "Harry Potter and the Philosopher's Stone",
     description: "A young wizard's journey begins.",
@@ -33,3 +33,9 @@ export const booksData = [
     authorId: 2,
   },
 ]
+
+module.exports = {
+  authorsData,
+  genresData,
+  booksData,
+}

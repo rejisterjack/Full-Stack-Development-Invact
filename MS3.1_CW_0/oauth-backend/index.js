@@ -10,7 +10,10 @@ const app = express()
 const PORT = process.env.PORT || 8000
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  credentials: true,
+  origin: process.env.FRONTEND_URL
+}))
 app.use(cookieParser())
 
 app.get("/", (req, res) => {
@@ -46,9 +49,28 @@ app.get("/auth/github/callback", async (req, res) => {
     // res.cookie("access_token", accessToken)
     setSecureCookie(res, accessToken)
 
-    return res.redirect(`${process.env.FRONTEND_URL}/v1/profile/github`)
+    return res.redirect(`${process.env.FRONTEND_URL}/v2/profile/github`)
   } catch (error) {
     res.status(500).json({ message: "Failed to authenticate with Github" })
+  }
+})
+
+app.get("/user/profile/github", async (req, res) => {
+  const accessToken = req.cookies.access_token
+  if (!accessToken) {
+    return res.status(401).json({ message: "Unauthorized" })
+  }
+
+  try {
+    const userResponse = await axios.get(`https://api.github.com/user`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const user = userResponse.data
+    return res.json({user})
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch user profile" })
   }
 })
 
@@ -82,9 +104,31 @@ app.get("/auth/google/callback", async (req, res) => {
     const accessToken = tokenResponse.data.access_token
     // res.cookie("access_token", accessToken)
     setSecureCookie(res, accessToken)
-    return res.redirect(`${process.env.FRONTEND_URL}/v1/profile/google`)
+    return res.redirect(`${process.env.FRONTEND_URL}/v2/profile/google`)
   } catch (error) {
     res.status(500).json({ message: "Failed to authenticate with Google" })
+  }
+})
+
+app.get("/user/profile/google", async (req, res) => {
+  const accessToken = req.cookies.access_token
+  if (!accessToken) {
+    return res.status(401).json({ message: "Unauthorized" })
+  }
+
+  try {
+    const userResponse = await axios.get(
+      `https://www.googleapis.com/oauth2/v2/userinfo?alt=json`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    const user = userResponse.data
+    return res.json({user})
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch user profile" })
   }
 })
 

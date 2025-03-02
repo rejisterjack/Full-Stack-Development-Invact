@@ -43,8 +43,8 @@ app.get("/auth/github/callback", async (req, res) => {
     )
 
     const accessToken = tokenResponse.data.access_token
-    res.cookie("access_token", accessToken)
-    // setSecureCookie(res, accessToken)
+    // res.cookie("access_token", accessToken)
+    setSecureCookie(res, accessToken)
 
     return res.redirect(`${process.env.FRONTEND_URL}/v1/profile/github`)
   } catch (error) {
@@ -80,8 +80,8 @@ app.get("/auth/google/callback", async (req, res) => {
     )
 
     const accessToken = tokenResponse.data.access_token
-    res.cookie("access_token", accessToken)
-    // setSecureCookie(res, accessToken)
+    // res.cookie("access_token", accessToken)
+    setSecureCookie(res, accessToken)
     return res.redirect(`${process.env.FRONTEND_URL}/v1/profile/google`)
   } catch (error) {
     res.status(500).json({ message: "Failed to authenticate with Google" })

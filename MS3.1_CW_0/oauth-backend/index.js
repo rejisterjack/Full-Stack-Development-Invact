@@ -3,11 +3,15 @@ const cors = require("cors")
 const { default: axios } = require("axios")
 require("dotenv").config()
 
+const cookieParser = require("cookie-parser")
+const { setSecureCookie } = require("./services")
+
 const app = express()
 const PORT = process.env.PORT || 8000
 
 app.use(express.json())
 app.use(cors())
+app.use(cookieParser())
 
 app.get("/", (req, res) => {
   res.send(`
@@ -40,6 +44,8 @@ app.get("/auth/github/callback", async (req, res) => {
 
     const accessToken = tokenResponse.data.access_token
     res.cookie("access_token", accessToken)
+    // setSecureCookie(res, accessToken)
+
     return res.redirect(`${process.env.FRONTEND_URL}/v1/profile/github`)
   } catch (error) {
     res.status(500).json({ message: "Failed to authenticate with Github" })
@@ -75,6 +81,7 @@ app.get("/auth/google/callback", async (req, res) => {
 
     const accessToken = tokenResponse.data.access_token
     res.cookie("access_token", accessToken)
+    // setSecureCookie(res, accessToken)
     return res.redirect(`${process.env.FRONTEND_URL}/v1/profile/google`)
   } catch (error) {
     res.status(500).json({ message: "Failed to authenticate with Google" })

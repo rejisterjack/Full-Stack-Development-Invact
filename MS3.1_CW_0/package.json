@@ -1,0 +1,18 @@
+{
+  "name": "ms3.1_cw_0",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "install": "concurrently \"cd oauth-backend && npm install\" \"cd oauth-frontend && npm install\"",
+    "start": "concurrently \"cd oauth-backend && npm start\" \"cd oauth-frontend && npm start\"",
+    "dev": "concurrently \"cd oauth-backend && npm run dev\" \"cd oauth-frontend && npm run dev\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

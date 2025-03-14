@@ -18,4 +18,31 @@ function seedData() {
   }
 }
 
+// find and update
+async function updateMovie(movieId, movieTitle, dataToUpdate) {
+  try {
+    // const updatedMovie = await Movie.findByIdAndUpdate(movieId, dataToUpdate, {
+    //   new: true,
+    //   runValidators: true,
+    // })
+    const updatedMovie = await Movie.findOneAndUpdate(
+      { title: movieTitle },
+      dataToUpdate,
+      {
+        new: true,
+        runValidators: true,
+      }
+    )
+    console.log("Movie updated successfully", updatedMovie)
+  } catch (error) {
+    console.error("Error updating movie", error)
+  }
+}
+
+updateMovie(
+  "67d1a695255a3d47268e5047",
+  "The Dark Knight",
+  { director: "Karan Johar" }
+)
+
 // seedData()

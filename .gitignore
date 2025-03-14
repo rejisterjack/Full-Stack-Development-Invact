@@ -132,3 +132,27 @@ dist
 # Replit debugger
 .breakpoints
 */uploads
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Flask specific
+instance/
+*.sqlite3
+*.db
+
+# Django specific
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+db.sqlite3
+*.mo
+*.env
+*.migrations/
+staticfiles/
+media/

@@ -1,0 +1,156 @@
+{
+  "info": {
+    "_postman_id": "your-postman-id",
+    "name": "Job Applications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Application",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"role\": \"Software Engineer\",\n  \"company\": \"Tech Corp\",\n  \"jdUrl\": \"https://techcorp.com/jobs/se\",\n  \"appliedAt\": \"2024-02-01\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/applications",
+          "host": ["{{base_url}}"],
+          "path": ["applications"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Applications",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/applications",
+          "host": ["{{base_url}}"],
+          "path": ["applications"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Application by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/applications/1",
+          "host": ["{{base_url}}"],
+          "path": ["applications", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Application",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"interview\",\n  \"interviewRounds\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/applications/1",
+          "host": ["{{base_url}}"],
+          "path": ["applications", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Application",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/applications/1",
+          "host": ["{{base_url}}"],
+          "path": ["applications", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Interview Round",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"roundNum\": 1,\n  \"roundType\": \"telephonic\",\n  \"interviewDate\": \"2024-02-10\",\n  \"questions\": \"What is your experience with React?\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/applications/1/interview",
+          "host": ["{{base_url}}"],
+          "path": ["applications", "1", "interview"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Interview Rounds",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/applications/1/interview",
+          "host": ["{{base_url}}"],
+          "path": ["applications", "1", "interview"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Application Reports",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/reports/applications?from=2024-01-01&to=2024-01-31",
+          "host": ["{{base_url}}"],
+          "path": ["reports", "applications"],
+          "query": [
+            {
+              "key": "from",
+              "value": "2024-01-01"
+            },
+            {
+              "key": "to",
+              "value": "2024-01-31"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000"
+    }
+  ]
+}

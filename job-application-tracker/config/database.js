@@ -1,6 +1,8 @@
 const path = require("path")
 const { Sequelize, DataTypes } = require("sequelize")
-require("dotenv").config()
+require("dotenv").config({
+  path: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+})
 
 const sequelize = new Sequelize({
   dialect: "sqlite",

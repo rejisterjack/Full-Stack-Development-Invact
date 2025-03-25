@@ -1,0 +1,48 @@
+const request = require("supertest")
+const app = require("./app")
+
+describe("Login API", () => {
+  it("should authenticate with correct credentials", async () => {
+    const response = await request(app)
+      .post("/login")
+      .send({ email: "user@example.com", password: "password" })
+
+    expect(response.status).toBe(200)
+    expect(response.body).toHaveProperty("success", true)
+    expect(response.body).toHaveProperty("token")
+  })
+
+  it("should reject incorrect credentials", async () => {
+    const response = await request(app)
+      .post("/login")
+      .send({ email: "user@example.com", password: "wrongpassword" })
+
+    expect(response.status).toBe(401)
+    expect(response.text).toBe("Invalid credentials")
+  })
+
+  it("should block requests after exceeding rate limit and allow after cooldown", async () => {
+    for (let i = 0; i < 5; i++) {
+      await request(app)
+        .post("/login")
+        .send({ email: "user@example.com", password: "password" })
+    }
+
+    const blockedResponse = await request(app)
+      .post("/login")
+      .send({ email: "user@example.com", password: "password" })
+
+    expect(blockedResponse.status).toBe(429)
+    expect(blockedResponse.body).toHaveProperty("error")
+
+    await new Promise((resolve) => setTimeout(resolve, 60000))
+
+    const allowedResponse = await request(app)
+      .post("/login")
+      .send({ email: "user@example.com", password: "password" })
+
+    expect(allowedResponse.status).toBe(200)
+    expect(allowedResponse.body).toHaveProperty("success", true)
+    expect(allowedResponse.body).toHaveProperty("token")
+  }, 65000)
+})

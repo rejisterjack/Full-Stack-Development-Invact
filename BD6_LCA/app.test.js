@@ -1,48 +1,48 @@
 const request = require("supertest")
 const app = require("./app")
 
+// 1. Missing Fields Test : ( Test case name: Handle missing email or password fields.)
+// Description: Handle scenarios where email or password fields are missing.
+// 2. Rate Limiting Test : ( Test case name: Block login attempts exceeding 5 attempts within one minute)
+// Description: Simulate 5 failed attempts within one minute and ensure the API blocks the next attempt with the following message:
+// {
+//     "error": "Too many login attempts. Try again later."
+// }
+
 describe("Login API", () => {
-  it("should authenticate with correct credentials", async () => {
-    const response = await request(app)
-      .post("/login")
-      .send({ email: "user@example.com", password: "password" })
+  it("should handle scenarios where email or password fields are missing", async () => {
+    const response = await request(app).post("/login").send({
+      email: "user@example.com",
+    })
 
-    expect(response.status).toBe(200)
-    expect(response.body).toHaveProperty("success", true)
-    expect(response.body).toHaveProperty("token")
+    console.log(response, "response")
+
+    expect(response.status).toBe(400)
+    expect(response.body).toHaveProperty(
+      "message",
+      "Email and password are required"
+    )
   })
 
-  it("should reject incorrect credentials", async () => {
-    const response = await request(app)
-      .post("/login")
-      .send({ email: "user@example.com", password: "wrongpassword" })
-
-    expect(response.status).toBe(401)
-    expect(response.text).toBe("Invalid credentials")
-  })
-
-  it("should block requests after exceeding rate limit and allow after cooldown", async () => {
+  it("Simulate 5 failed attempts within one minute and ensure the API blocks the next attempt with the following message", async () => {
     for (let i = 0; i < 5; i++) {
-      await request(app)
-        .post("/login")
-        .send({ email: "user@example.com", password: "password" })
+      await request(app).post("/login").send({
+        email: "user@example.com",
+        password: "password",
+      })
     }
 
-    const blockedResponse = await request(app)
-      .post("/login")
-      .send({ email: "user@example.com", password: "password" })
+    const response = await request(app).post("/login").send({
+      email: "user@example.com",
+      password: "password",
+    })
 
-    expect(blockedResponse.status).toBe(429)
-    expect(blockedResponse.body).toHaveProperty("error")
+    expect(response.status).toBe(429)
+    expect(response.body).toHaveProperty(
+      "error",
+      "Too many login attempts. Try again later."
+    )
+  })
 
-    await new Promise((resolve) => setTimeout(resolve, 60000))
-
-    const allowedResponse = await request(app)
-      .post("/login")
-      .send({ email: "user@example.com", password: "password" })
-
-    expect(allowedResponse.status).toBe(200)
-    expect(allowedResponse.body).toHaveProperty("success", true)
-    expect(allowedResponse.body).toHaveProperty("token")
-  }, 65000)
+  
 })

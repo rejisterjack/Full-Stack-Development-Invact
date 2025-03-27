@@ -8,7 +8,7 @@ const defaultUser = {
 const login = (req, res) => {
   const { email, password } = req.body
   if (!email || !password) {
-    return res.status(400).send("Email and password are required")
+    return res.status(400).json({message: "Email and password are required"})
   }
   if (email !== defaultUser.email || password !== defaultUser.password) {
     return res.status(401).send("Invalid credentials")

@@ -33,7 +33,7 @@ io.on("connection", (socket) => {
       message: message,
     })
     await newMessage.save()
-    io.emit("receive_message", data) 
+    io.emit("receive_message", data)
   })
 
   socket.on("disconnect", () => {
@@ -72,7 +72,7 @@ app.get("/users", async (req, res) => {
 connectDB()
   .then(() => {
     const port = process.env.PORT || 3000
-    server.listen(port, () => { 
+    server.listen(port, () => {
       console.log(`Server is running on port ${port}`)
     })
   })

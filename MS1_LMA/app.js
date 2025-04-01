@@ -89,6 +89,45 @@ async function addReadingList(data) {
   }
 }
 
+async function updateBook(bookId, data) {
+  const { title, genre } = data
+  const book = await db.Book.findByPk(bookId)
+  if (!book) {
+    return { status: 404, message: "Book not found" }
+  }
+  const updatedBook = await book.update({ title, genre })
+  return {
+    status: 200,
+    message: "Book details updated successfully",
+    book: updatedBook,
+  }
+}
+
+async function getUserByReadingList(userId) {
+  const readingList = await db.ReadingList.findAll({
+    where: { userId },
+    include: [
+      { model: db.Book, as: "books", attributes: ["title", "author", "genre"] },
+    ],
+  })
+  if (!readingList.length) {
+    return {
+      status: 404,
+      message: "User not found or no books in reading list",
+    }
+  }
+  return { status: 200, readingList }
+}
+
+async function removeBookFromReadingList(readingListId) {
+  const entry = await db.ReadingList.findByPk(readingListId)
+  if (!entry) {
+    return { status: 404, message: "Reading list entry not found" }
+  }
+  await entry.destroy()
+  return { status: 200, message: "Book removed from reading list" }
+}
+
 app.post("/api/users", async (req, res) => {
   const { status, message, user } = await addUser(req.body)
   res.status(status).json({ message, user })
@@ -107,6 +146,28 @@ app.get("/api/books/search", async (req, res) => {
 app.post("/api/reading-list", async (req, res) => {
   const { statusCode, message, readingList } = await addReadingList(req.body)
   res.status(statusCode).json({ message, readingList })
+})
+
+app.post("/api/books/:bookId", async (req, res) => {
+  const { bookId } = req.params
+  const { status, message, book } = await updateBook(bookId, req.body)
+  res.status(status).json({ message, book })
+})
+
+app.get("/api/reading-list/:userId", async (req, res) => {
+  const { userId } = req.params
+  const { status, message, readingList } = await getUserByReadingList(userId)
+  if (status === 404) {
+    res.status(status).json({ message })
+  } else {
+    res.status(status).json({ readingList })
+  }
+})
+
+app.post("/api/reading-list/:readingListId", async (req, res) => {
+  const { readingListId } = req.params
+  const { status, message } = await removeBookFromReadingList(readingListId)
+  res.status(status).json({ message })
 })
 
 module.exports = app

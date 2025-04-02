@@ -157,11 +157,7 @@ app.post("/api/books/:bookId", async (req, res) => {
 app.get("/api/reading-list/:userId", async (req, res) => {
   const { userId } = req.params
   const { status, message, readingList } = await getUserByReadingList(userId)
-  if (status === 404) {
-    res.status(status).json({ message })
-  } else {
-    res.status(status).json({ readingList })
-  }
+  res.status(status).json({ message, readingList })
 })
 
 app.post("/api/reading-list/:readingListId", async (req, res) => {

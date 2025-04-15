@@ -1,0 +1,194 @@
+{
+  "info": {
+    "name": "Book Collection API",
+    "description": "API for managing a book collection with users, books, and tags",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "description": "User management endpoints",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"user1\",\n  \"email\": \"user1@example.com\"\n}"
+            },
+            "description": "Create a new user account"
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "1"]
+            },
+            "description": "Retrieve a user by their ID"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Books",
+      "description": "Book management endpoints",
+      "item": [
+        {
+          "name": "Search Books",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/books/search?query=javascript",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "books", "search"],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "javascript"
+                }
+              ]
+            },
+            "description": "Search books from Google Books API"
+          }
+        },
+        {
+          "name": "Save Book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/books/save",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "books", "save"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"title\": \"JavaScript: The Good Parts\",\n  \"author\": \"Douglas Crockford\",\n  \"thumbnail\": \"https://books.google.com/books/content?id=PXa2bby0oQ0C&printsec=frontcover&img=1&zoom=1\"\n}"
+            },
+            "description": "Save a book to user's collection"
+          }
+        },
+        {
+          "name": "Get User's Books",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/books/user/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "books", "user", "1"]
+            },
+            "description": "Get all books for a specific user"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "description": "Tag management endpoints",
+      "item": [
+        {
+          "name": "Create Tag",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tags",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "tags"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"programming\"\n}"
+            },
+            "description": "Create a new tag"
+          }
+        },
+        {
+          "name": "Add Tag to Book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tags/book",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "tags", "book"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookId\": 1,\n  \"tagId\": 1\n}"
+            },
+            "description": "Associate a tag with a book"
+          }
+        },
+        {
+          "name": "Get Books by Tag",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/tags/books/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "tags", "books", "1"]
+            },
+            "description": "Get all books with a specific tag"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Root",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/",
+          "host": ["{{baseUrl}}"],
+          "path": [""]
+        },
+        "description": "API root endpoint"
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}

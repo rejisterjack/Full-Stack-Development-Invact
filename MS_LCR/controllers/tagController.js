@@ -29,63 +29,63 @@ exports.createTag = async (req, res) => {
 
 exports.addTagToBook = async (req, res) => {
   try {
-    const { bookId, tagId } = req.body
+    const { bookId, tagName } = req.body
 
-    if (!bookId || !tagId) {
-      return res.status(400).json({ error: "Book ID and Tag ID are required" })
+    let bookTag
+
+    if (!bookId || !tagName) {
+      return res
+        .status(400)
+        .json({ message: "Book ID and Tag Name is required" })
     }
 
     const book = await Book.findByPk(bookId)
     if (!book) {
-      return res.status(404).json({ error: "Book not found" })
+      return res.status(404).json({ message: "No book found" })
     }
 
-    const tag = await Tag.findByPk(tagId)
+    const tag = await Tag.findOne({
+      where: {
+        name: tagName,
+      },
+    })
+
     if (!tag) {
-      return res.status(404).json({ error: "Tag not found" })
+      bookTag = await Tag.create({ name: tagName })
+      // await BookTags.create({
+      //   bookId: bookId,
+      //   tagId: bookTag.id,
+      // })
+      return res.status(201).json({ message: "tag added to book successfully" })
     }
 
-    const existingRelation = await BookTags.findOne({
-      where: { BookId: bookId, TagId: tagId },
-    })
-
-    if (existingRelation) {
-      return res.status(409).json({ error: "This book already has this tag" })
-    }
-
-    await BookTags.create({ BookId: bookId, TagId: tagId })
-
-    return res.status(201).json({
-      message: "Tag added to book successfully",
-    })
+    // await BookTags.create({
+    //   bookId: bookId,
+    //   tagId: tag.id,
+    // })
+    return res.status(201).json({ message: "tag added to book successfully" })
   } catch (error) {
-    console.error("Error adding tag to book:", error)
-    return res.status(500).json({ error: "Internal server error" })
+    res.status(500).json({ error: "Internal server error" })
   }
 }
 
 exports.getBooksByTag = async (req, res) => {
   try {
-    const { tagId } = req.params
+    const { tagName } = req.query
+    const tag = await Tag.findOne({
+      name: tagName,
+    })
 
-    const tag = await Tag.findByPk(tagId)
     if (!tag) {
       return res.status(404).json({ error: "Tag not found" })
     }
 
     const books = await Book.findAll({
-      include: [
-        {
-          model: Tag,
-          where: { id: tagId },
-          through: { attributes: [] },
-        },
-      ],
+      include: [{ model: Tag, where: { name: tagName } }],
     })
 
-    return res.status(200).json({ books })
+    return res.status(200).json({books})
   } catch (error) {
-    console.error("Error fetching books by tag:", error)
-    return res.status(500).json({ error: "Internal server error" })
+    res.status(500).json({ error: "Internal server error" })
   }
 }
